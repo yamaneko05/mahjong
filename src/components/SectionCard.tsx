@@ -9,7 +9,7 @@ export default function SectionCard({
   startingPoints,
   players,
 }: {
-  id: number;
+  id: string;
   title: string;
   rate: string;
   startingPoints: number;

@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Rate {
+  NORATE
+  ONE_TWENTY
+  ONE_TEN
+  ONE_FIFTH
+}
+
+enum StartingPoints {
+  TWO_FIVE
+  THREE_ZERO
+  THREE_FIVE
+}
+
+model Player {
+  id             String          @id @default(uuid())
+  name           String
+  createdAt      DateTime        @default(now())
+  sections       Section[]
+  gameResults    GameResult[]
+  sectionResults SectionResult[]
+}
+
+model Section {
+  id             String          @id @default(uuid())
+  date           DateTime
+  createdAt      DateTime        @default(now())
+  startingPoints StartingPoints
+  rate           Rate
+  players        Player[]
+  games          Game[]
+  sectionResults SectionResult[]
+}
+
+model Game {
+  id          String       @id @default(uuid())
+  sectionId   String
+  createdAt   DateTime     @default(now())
+  section     Section      @relation(fields: [sectionId], references: [id])
+  gameResults GameResult[]
+}
+
+model GameResult {
+  id       String @id @default(uuid())
+  gameId   String
+  playerId String
+  point    Int
+  game     Game   @relation(fields: [gameId], references: [id])
+  player   Player @relation(fields: [playerId], references: [id])
+}
+
+model SectionResult {
+  id        String  @id @default(uuid())
+  sectionId String
+  playerId  String
+  point     Int
+  section   Section @relation(fields: [sectionId], references: [id])
+  player    Player  @relation(fields: [playerId], references: [id])
+}

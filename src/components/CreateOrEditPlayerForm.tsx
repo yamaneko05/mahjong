@@ -1,13 +1,25 @@
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+"use client";
 
-export default function CreateOrEditPlayerForm({ name }: { name?: string }) {
+import { Control } from "react-hook-form";
+import { PlayerFormInput } from "@/schemas/playerForm";
+import FormField from "./FormField";
+import { FormEventHandler } from "react";
+
+export default function CreateOrEditPlayerForm({
+  handleSubmit,
+  control,
+}: {
+  handleSubmit: FormEventHandler;
+  control: Control<PlayerFormInput>;
+}) {
   return (
-    <>
-      <div>
-        <Label htmlFor={"name"}>名前</Label>
-        <Input id={"name"} defaultValue={name} className="mt-2" />
-      </div>
-    </>
+    <form id="create-player-form" onSubmit={handleSubmit}>
+      <FormField
+        control={control}
+        name="name"
+        label="名前"
+        description="プレイヤーの名前を入力してください。"
+      />
+    </form>
   );
 }

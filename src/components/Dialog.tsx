@@ -1,41 +1,53 @@
+"use client";
+
 import {
   Dialog as ShadcnDialog,
   DialogClose,
   DialogContent,
-  DialogFooter,
-  DialogHeader,
+  DialogFooter as ShadcnDialogFooter,
+  DialogHeader as ShadcnDialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "./ui/button";
 import React from "react";
 
-export default function Dialog({
-  title,
-  action,
+export function Dialog({
+  isOpen,
+  setIsOpen,
   trigger,
-  content,
+  children,
 }: {
-  title: string;
-  action: string;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   trigger: React.ReactNode;
-  content: React.ReactNode;
+  children: React.ReactNode;
 }) {
   return (
-    <ShadcnDialog>
+    <ShadcnDialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="gap-6">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        {content}
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button variant="outline">キャンセル</Button>
-          </DialogClose>
-          <Button type="submit">{action}</Button>
-        </DialogFooter>
+      <DialogContent className="gap-6" aria-describedby={undefined}>
+        {children}
       </DialogContent>
     </ShadcnDialog>
+  );
+}
+
+export function DialogHeader({ children }: { children: React.ReactNode }) {
+  return (
+    <ShadcnDialogHeader>
+      <DialogTitle>{children}</DialogTitle>
+    </ShadcnDialogHeader>
+  );
+}
+
+export function DialogFooter({ children }: { children: React.ReactNode }) {
+  return (
+    <ShadcnDialogFooter>
+      <DialogClose asChild>
+        <Button variant="outline">キャンセル</Button>
+      </DialogClose>
+      {children}
+    </ShadcnDialogFooter>
   );
 }

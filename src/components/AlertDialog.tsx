@@ -11,19 +11,25 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export default function AlertDialog({
+  isOpen,
+  setIsOpen,
   title,
   description,
   action,
-  children,
+  trigger,
+  onContinue,
 }: {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   title: string;
   description: string;
   action: string;
-  children: React.ReactNode;
+  trigger: React.ReactNode;
+  onContinue: () => void;
 }) {
   return (
-    <ShadcnAlertDialog>
-      <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
+    <ShadcnAlertDialog open={isOpen} onOpenChange={setIsOpen}>
+      <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
@@ -31,7 +37,7 @@ export default function AlertDialog({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>キャンセル</AlertDialogCancel>
-          <AlertDialogAction>{action}</AlertDialogAction>
+          <AlertDialogAction onClick={onContinue}>{action}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </ShadcnAlertDialog>

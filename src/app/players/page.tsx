@@ -1,8 +1,18 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import CreatePlayerDialog from "@/components/CreatePlayerDialog";
 import PlayerCard from "@/components/PlayerCard";
+import { prisma } from "@/lib/prisma";
 
-export default function Page() {
+async function getPlayers() {
+  const players = await prisma.player.findMany({
+    orderBy: { name: "asc" },
+  });
+  return players;
+}
+
+export default async function Page() {
+  const players = await getPlayers();
+
   return (
     <>
       <Breadcrumb
@@ -14,15 +24,9 @@ export default function Page() {
       <div className="mt-4 flex flex-row-reverse">
         <CreatePlayerDialog />
       </div>
-      <div className="mt-4 space-y-2">
-        {[
-          { id: 1, name: "えいご" },
-          { id: 2, name: "おうた" },
-          { id: 3, name: "かいと" },
-          { id: 4, name: "きむら" },
-          { id: 5, name: "だいち" },
-        ].map((player) => (
-          <PlayerCard key={player.id} id={player.id} name={player.name} />
+      <div className="mt-4 space-y-4">
+        {players.map((player) => (
+          <PlayerCard key={player.id} player={player} />
         ))}
       </div>
     </>

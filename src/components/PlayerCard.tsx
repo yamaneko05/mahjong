@@ -1,29 +1,16 @@
-import { EditIcon, Trash2Icon } from "lucide-react";
-import { Button } from "./ui/button";
-import AlertDialog from "./AlertDialog";
 import EditPlayerDialog from "./EditPlayerDialog";
+import { Player } from "@/generated/prisma";
+import DeletePlayerAlertDialog from "./DeletePlayerAlertDialog";
 
-export default function PlayerCard({ id, name }: { id: number; name: string }) {
+export default function PlayerCard({ player }: { player: Player }) {
   return (
-    <div className="flex space-x-2">
-      <div className="flex-1">{name}</div>
-      <EditPlayerDialog
-        name={name}
-        trigger={
-          <Button variant={"ghost"} size={"icon"}>
-            <EditIcon />
-          </Button>
-        }
-      />
-      <AlertDialog
-        title="プレイヤーを削除"
-        description={`${name}を削除しますか？`}
-        action="削除"
-      >
-        <Button variant={"ghost"} size={"icon"}>
-          <Trash2Icon />
-        </Button>
-      </AlertDialog>
+    <div className="flex items-center space-x-2">
+      <div className="flex-1">
+        <div>{player.name}</div>
+        <div className="mt-0.5 text-sm">作成日: 2025/07/28</div>
+      </div>
+      <EditPlayerDialog id={player.id} name={player.name} />
+      <DeletePlayerAlertDialog id={player.id} name={player.name} />
     </div>
   );
 }
