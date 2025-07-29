@@ -1,14 +1,10 @@
 "use client";
 
-import { PlayerFormInput, playerFormSchema } from "@/schemas/playerForm";
-import CreateOrEditPlayerForm from "./CreateOrEditPlayerForm";
-import { Dialog, DialogFooter, DialogHeader } from "./Dialog";
 import { Button } from "./ui/button";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Form } from "./ui/form";
-import { EditIcon, Loader2Icon } from "lucide-react";
+import PlayerForm from "./PlayerForm";
+import DialogTemplate from "./DialogTemplate";
+import { EditIcon } from "lucide-react";
 import { updatePlayer } from "@/actions";
 
 export default function EditPlayerDialog({
@@ -18,46 +14,34 @@ export default function EditPlayerDialog({
   id: string;
   name: string;
 }) {
-  const form = useForm<PlayerFormInput>({
-    mode: "onBlur",
-    resolver: zodResolver(playerFormSchema),
-    defaultValues: {
-      name: name,
-    },
-  });
-  const isLoading = form.formState.isSubmitting;
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit = async (data: PlayerFormInput) => {
-    await updatePlayer(id, data);
+  const handleSuccess = () => {
     setIsOpen(false);
-    form.reset();
   };
 
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
-    <Dialog
+    <DialogTemplate
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
       trigger={
         <Button variant={"ghost"} size={"icon"}>
           <EditIcon />
         </Button>
       }
-      isOpen={isOpen}
-      setIsOpen={setIsOpen}
+      headerText="プレイヤーを編集"
+      formId="edit-player-form"
+      isSubmitting={isSubmitting}
+      submitButtonText="保存"
     >
-      <DialogHeader>プレイヤーを編集</DialogHeader>
-      <Form {...form}>
-        <CreateOrEditPlayerForm
-          handleSubmit={form.handleSubmit(onSubmit)}
-          control={form.control}
-        />
-      </Form>
-      <DialogFooter>
-        <Button type="submit" form="create-player-form" disabled={isLoading}>
-          {isLoading && <Loader2Icon className="animate-spin" />}
-          保存
-        </Button>
-      </DialogFooter>
-    </Dialog>
+      <PlayerForm
+        onSuccess={handleSuccess}
+        onIsSubmittingChange={setIsSubmitting}
+        formId="edit-player-form"
+        defaultValues={{ name: name }}
+        action={async (data) => await updatePlayer(id, data)}
+      />
+    </DialogTemplate>
   );
 }
