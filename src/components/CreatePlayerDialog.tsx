@@ -26,6 +26,7 @@ export default function CreatePlayerDialog() {
         formId="create-player-form"
         defaultValues={{ name: "" }}
         action={async (data) => await createPlayer(data)}
+        clearOnSuccess
       />
     </DialogTemplate>
   );

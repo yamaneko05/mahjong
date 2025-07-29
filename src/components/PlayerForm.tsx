@@ -14,12 +14,14 @@ export default function PlayerForm({
   defaultValues,
   formId,
   action,
+  clearOnSuccess = false,
 }: {
   onSuccess: () => void;
   onIsSubmittingChange: (isSubmitting: boolean) => void;
   defaultValues: DefaultValues<PlayerFormInput>;
   formId: string;
   action: (data: PlayerFormInput) => Promise<unknown>;
+  clearOnSuccess?: boolean;
 }) {
   const form = useForm<PlayerFormInput>({
     mode: "onBlur",
@@ -27,14 +29,19 @@ export default function PlayerForm({
     defaultValues: defaultValues,
   });
 
-  const { control } = form;
+  const { reset, control } = form;
+
+  const onSubmit = async (data: PlayerFormInput) => {
+    await action(data);
+    onSuccess();
+    if (clearOnSuccess) reset();
+  };
 
   return (
     <FormTemplate
       form={form}
       formId={formId}
-      action={action}
-      onSuccess={onSuccess}
+      onSubmit={onSubmit}
       onIsSubmittingChange={onIsSubmittingChange}
     >
       <FormField

@@ -5,31 +5,22 @@ import { Form } from "./ui/form";
 import { useEffect } from "react";
 
 export default function FormTemplate<T extends FieldValues>({
-  onSuccess,
+  onSubmit,
   onIsSubmittingChange,
   children,
   formId,
   form,
-  action,
 }: {
-  onSuccess: () => void;
+  onSubmit: (data: T) => Promise<void>;
   onIsSubmittingChange: (isSubmitting: boolean) => void;
   children: React.ReactNode;
   formId: string;
   form: UseFormReturn<T>;
-  action: (data: T) => Promise<unknown>;
 }) {
   const {
     handleSubmit,
-    reset,
     formState: { isSubmitting },
   } = form;
-
-  const onSubmit = async (data: T) => {
-    await action(data);
-    onSuccess();
-    reset();
-  };
 
   useEffect(() => {
     onIsSubmittingChange(isSubmitting);
