@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/Breadcrumb";
-import GameCard from "@/components/GameCard";
+import GameCard from "@/components/cards/GameCard";
 
 export default async function Page({
   params,

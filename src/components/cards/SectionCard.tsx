@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Table, TableBody, TableCell, TableRow } from "./ui/table";
+import { Table, TableBody, TableCell, TableRow } from "../ui/table";
 import { cn } from "@/lib/utils";
 
 export default function SectionCard({

@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Breadcrumb";
-import CreatePlayerDialog from "@/components/CreatePlayerDialog";
-import PlayerCard from "@/components/PlayerCard";
+import CreatePlayerDialog from "@/components/dialogs/CreatePlayerDialog";
+import PlayerCard from "@/components/cards/PlayerCard";
 import { prisma } from "@/lib/prisma";
 
 async function getPlayers() {

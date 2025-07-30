@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Breadcrumb";
-import CreateSectionDialog from "@/components/CreateSectionDialog";
-import SectionCard from "@/components/SectionCard";
+import CreateSectionDialog from "@/components/dialogs/CreateSectionDialog";
+import SectionCard from "@/components/cards/SectionCard";
 
 export default function Page() {
   return (

@@ -1,6 +1,6 @@
 import EditPlayerDialog from "./EditPlayerDialog";
 import { Player } from "@/generated/prisma";
-import DeletePlayerAlertDialog from "./DeletePlayerAlertDialog";
+import DeletePlayerAlertDialog from "../alert-dialogs/DeletePlayerAlertDialog";
 import dayjs from "dayjs";
 
 export default function PlayerCard({ player }: { player: Player }) {

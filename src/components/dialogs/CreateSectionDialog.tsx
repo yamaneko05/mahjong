@@ -1,15 +1,15 @@
 "use client";
 
 import { PlayerFormInput, playerFormSchema } from "@/schemas/playerForm";
-import { Dialog, DialogFooter, DialogHeader } from "./Dialog";
-import { Button } from "./ui/button";
+import { Dialog, DialogFooter, DialogHeader } from "../Dialog";
+import { Button } from "../ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { Form } from "./ui/form";
+import { Form } from "../ui/form";
 import { Loader2Icon } from "lucide-react";
 import { createPlayer } from "@/actions";
-import CreateSectionForm from "./CreateSectionForm";
+import CreateSectionForm from "../CreateSectionForm";
 
 export default function CreatePlayerDialog() {
   const form = useForm<PlayerFormInput>({
