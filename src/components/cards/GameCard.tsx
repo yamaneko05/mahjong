@@ -1,25 +1,23 @@
 import { CircleCheckIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { Game, GameResult, Player } from "@/generated/prisma";
 
 export default function GameCard({
-  title,
-  players,
+  game,
+  index,
 }: {
-  title: string;
-  players: {
-    name: string;
-    points: number;
-  }[];
+  game: Game & { gameResults: (GameResult & { player: Player })[] };
+  index: number;
 }) {
   return (
     <div className="">
-      <h3 className="font-bold text-lg text-center">{title}</h3>
+      <h3 className="font-bold text-lg text-center">{index + 1}ゲーム目</h3>
       <div className="flex gap-2 mt-2">
-        {players.map((player, index) => (
-          <div key={index}>
-            <div className="text-center text-sm">{player.name}</div>
+        {game.gameResults.map((result) => (
+          <div key={result.id}>
+            <div className="text-center text-sm">{result.player.name}</div>
             <Input
-              defaultValue={player.points.toLocaleString("ja-JP")}
+              defaultValue={result.point.toLocaleString("ja-JP")}
               className="text-center mt-1"
             />
           </div>

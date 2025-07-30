@@ -10,9 +10,9 @@ import { sectionFormInput, sectionFormSchema } from "@/schemas/sectionForm";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { usePlayers } from "@/hooks/usePlayers";
-import { useRates } from "@/hooks/useRates";
 import { STARTING_POINTS_ARRAY } from "@/constants/startingPointsConstants";
+import { usePlayers } from "@/app/hooks/usePlayers";
+import { useRates } from "@/app/hooks/useRates";
 
 export default function SectionForm({
   onSuccess,
@@ -52,6 +52,7 @@ export default function SectionForm({
       formId={formId}
       onSubmit={onSubmit}
       onIsSubmittingChange={onIsSubmittingChange}
+      className="space-y-6"
     >
       <FormField
         control={control}
@@ -74,7 +75,7 @@ export default function SectionForm({
             description="今日の日付がデフォルトで入ります。"
           >
             <RadioGroup className="mt-2" {...field}>
-              {rates.map((rate) => (
+              {rates?.map((rate) => (
                 <div key={rate.id} className="flex items-center space-x-3">
                   <RadioGroupItem id={`rate-${rate.id}`} value={rate.id} />
                   <Label htmlFor={`rate-${rate.id}`}>{rate.name}</Label>
@@ -121,7 +122,7 @@ export default function SectionForm({
             description="3人もしくは4人を選択してください。"
           >
             <div className="mt-2 space-y-2">
-              {players.map((player) => (
+              {players?.map((player) => (
                 <div key={player.id} className="flex items-center space-x-3">
                   <Checkbox
                     id={`players-${player.id}`}

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 import { Player, Rate, Section, SectionResult } from "@/generated/prisma";
-import dayjs from "dayjs";
+import dayjs from "@/lib/dayjs";
 import { DATE_FORMAT } from "@/constants/dateFormatConstants";
 
 export default function SectionCard({
@@ -36,10 +36,10 @@ export default function SectionCard({
               <TableCell>{result.player.name}</TableCell>
               <TableCell
                 className={cn(
-                  result.point > 0 ? "text-green-500" : "text-red-500"
+                  result.result > 0 ? "text-green-500" : "text-red-500"
                 )}
               >
-                {result.point.toLocaleString("ja-JP", {
+                {result.result.toLocaleString("ja-JP", {
                   style: "currency",
                   currency: "JPY",
                 })}

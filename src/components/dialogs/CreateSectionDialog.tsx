@@ -5,12 +5,15 @@ import { useState } from "react";
 import DialogTemplate from "../DialogTemplate";
 import { createSection } from "@/app/actions";
 import SectionForm from "../SectionForm";
-import dayjs from "dayjs";
+import dayjs from "@/lib/dayjs";
 import { STARTING_POINTS_ARRAY } from "@/constants/startingPointsConstants";
+import { useRates } from "@/app/hooks/useRates";
 
 export default function CreateSectionDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const rates = useRates();
 
   return (
     <DialogTemplate
@@ -28,7 +31,7 @@ export default function CreateSectionDialog() {
         formId="create-section-form"
         defaultValues={{
           date: dayjs().format("YYYY-MM-DD"),
-          rateId: undefined,
+          rateId: rates && rates[0].id,
           startingPoints: STARTING_POINTS_ARRAY[0],
           playerIds: [],
         }}

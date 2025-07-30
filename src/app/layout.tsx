@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import QueryProvider from "@/components/QueryProvider";
 
 const notoSansJp = Noto_Sans_JP({
   subsets: ["latin"],
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${notoSansJp.className} antialiased`}>
-        <div className="p-4">{children}</div>
+        <QueryProvider>
+          <div className="p-4">{children}</div>
+        </QueryProvider>
       </body>
     </html>
   );

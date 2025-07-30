@@ -47,7 +47,7 @@ model GameResult {
   id       String @id @default(uuid())
   gameId   String
   playerId String
-  point    Int
+  points   Int
   game     Game   @relation(fields: [gameId], references: [id])
   player   Player @relation(fields: [playerId], references: [id])
 }
@@ -56,7 +56,7 @@ model SectionResult {
   id        String  @id @default(uuid())
   sectionId String
   playerId  String
-  point     Int
+  result    Int
   section   Section @relation(fields: [sectionId], references: [id])
   player    Player  @relation(fields: [playerId], references: [id])
 }

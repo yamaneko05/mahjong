@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { PlayerFormInput, playerFormSchema } from "@/schemas/playerForm";
 import { Prisma } from "@/generated/prisma";
 import { sectionFormInput, sectionFormSchema } from "@/schemas/sectionForm";
+import dayjs from "@/lib/dayjs";
 
 export async function createPlayer(data: PlayerFormInput) {
   const parsed = playerFormSchema.safeParse(data);
@@ -91,6 +92,7 @@ export async function getSections() {
     include: {
       rate: true,
       sectionResults: {
+        orderBy: { result: "desc" },
         include: {
           player: true,
         },
@@ -98,6 +100,25 @@ export async function getSections() {
     },
   });
   return sections;
+}
+
+export async function getSection(id: string) {
+  const section = await prisma.section.findUniqueOrThrow({
+    where: { id: id },
+    include: {
+      rate: true,
+      games: {
+        include: {
+          gameResults: {
+            include: {
+              player: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  return section;
 }
 
 export async function createSection(data: sectionFormInput) {
@@ -112,7 +133,7 @@ export async function createSection(data: sectionFormInput) {
 
   await prisma.section.create({
     data: {
-      date: date,
+      date: dayjs(date).toISOString(),
       rateId: rateId,
       startingPoints: startingPoints,
       players: {
@@ -121,5 +142,6 @@ export async function createSection(data: sectionFormInput) {
     },
   });
 
+  revalidatePath("/sections");
   return { success: true };
 }

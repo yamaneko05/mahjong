@@ -17,32 +17,53 @@ async function main() {
   // Rateデータを作成
   const rate1 = await prisma.rate.create({
     data: {
-      name: "Standard Rate",
-      rate: 0.5,
+      name: "ノーレート",
+      rate: 0,
     },
   });
   const rate2 = await prisma.rate.create({
     data: {
-      name: "High Rate",
-      rate: 1.0,
+      name: "1/20(テンゴ)",
+      rate: 1 / 20,
+    },
+  });
+  const rate3 = await prisma.rate.create({
+    data: {
+      name: "1/10(テンピン)",
+      rate: 1 / 10,
+    },
+  });
+  const rate4 = await prisma.rate.create({
+    data: {
+      name: "1/5(テンリャンピン)",
+      rate: 1 / 5,
     },
   });
   console.log("Created rates.");
 
-  // Playerデータを作成
   const player1 = await prisma.player.create({
     data: {
-      name: "Alice",
+      name: "えいご",
     },
   });
   const player2 = await prisma.player.create({
     data: {
-      name: "Bob",
+      name: "おうた",
     },
   });
   const player3 = await prisma.player.create({
     data: {
-      name: "Charlie",
+      name: "かいと",
+    },
+  });
+  const player4 = await prisma.player.create({
+    data: {
+      name: "きむら",
+    },
+  });
+  const player5 = await prisma.player.create({
+    data: {
+      name: "だいち",
     },
   });
   console.log("Created players.");
@@ -50,21 +71,31 @@ async function main() {
   // Sectionデータを作成
   const section1 = await prisma.section.create({
     data: {
-      date: new Date("2024-07-20T10:00:00Z"),
-      startingPoints: 1000,
+      date: new Date("2025-06-28"),
+      startingPoints: 25000,
       rateId: rate1.id,
       players: {
-        connect: [{ id: player1.id }, { id: player2.id }, { id: player3.id }],
+        connect: [
+          { id: player1.id },
+          { id: player2.id },
+          { id: player3.id },
+          { id: player4.id },
+        ],
       },
     },
   });
   const section2 = await prisma.section.create({
     data: {
-      date: new Date("2024-07-21T14:00:00Z"),
-      startingPoints: 2000,
+      date: new Date("2025-06-25"),
+      startingPoints: 25000,
       rateId: rate2.id,
       players: {
-        connect: [{ id: player1.id }, { id: player2.id }],
+        connect: [
+          { id: player2.id },
+          { id: player3.id },
+          { id: player4.id },
+          { id: player5.id },
+        ],
       },
     },
   });
@@ -141,27 +172,42 @@ async function main() {
       {
         sectionId: section1.id,
         playerId: player1.id,
-        point: 1020, // 1000 + 50 - 10 = 1040 (例として適当な値を設定)
+        result: 5650,
       },
       {
         sectionId: section1.id,
         playerId: player2.id,
-        point: 980, // 1000 - 20 + 40 = 1020
+        result: 230,
       },
       {
         sectionId: section1.id,
         playerId: player3.id,
-        point: 940, // 1000 - 30 - 30 = 940
+        result: -1920,
       },
       {
-        sectionId: section2.id,
-        playerId: player1.id,
-        point: 2100, // 2000 + 100 = 2100
+        sectionId: section1.id,
+        playerId: player4.id,
+        result: 3960,
       },
       {
         sectionId: section2.id,
         playerId: player2.id,
-        point: 1900, // 2000 - 100 = 1900
+        result: 1610,
+      },
+      {
+        sectionId: section2.id,
+        playerId: player3.id,
+        result: 390,
+      },
+      {
+        sectionId: section2.id,
+        playerId: player4.id,
+        result: 230,
+      },
+      {
+        sectionId: section2.id,
+        playerId: player5.id,
+        result: -2230,
       },
     ],
   });

@@ -10,12 +10,14 @@ export default function FormTemplate<T extends FieldValues>({
   children,
   formId,
   form,
+  className,
 }: {
   onSubmit: (data: T) => Promise<void>;
   onIsSubmittingChange: (isSubmitting: boolean) => void;
   children: React.ReactNode;
   formId: string;
   form: UseFormReturn<T>;
+  className?: string;
 }) {
   const {
     handleSubmit,
@@ -28,7 +30,7 @@ export default function FormTemplate<T extends FieldValues>({
 
   return (
     <Form {...form}>
-      <form id={formId} onSubmit={handleSubmit(onSubmit)}>
+      <form id={formId} className={className} onSubmit={handleSubmit(onSubmit)}>
         {children}
       </form>
     </Form>
