@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+麻雀の精算ツールです。
 
-## Getting Started
+## 設計メモ（スプレッドシート）
 
-First, run the development server:
+画面、DB、コンポーネントなどの設計を整理しています。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+https://docs.google.com/spreadsheets/d/11bhDiMd2CWPqyIycpgEnN8WLKTr2EAttqATFyt8C1D4/edit?usp=sharing
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 概要
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+いままでスプレッドシートで行っていた麻雀の精算について、
+Web 上で動作するアプリを作成しそれに移行する。
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+スプレッドシート上の過去の結果データを取り込む。（プログラムを作成して実行するか、手動で行うか検討）
 
-## Learn More
+![alt text](https://i.imgur.com/JFX1s0y.png)
 
-To learn more about Next.js, take a look at the following resources:
+## 目的
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- シンプルな操作で簡単に結果を入力できるようにする
+- URL を共有するだけで全員が操作、閲覧できるようにする
+- 統計データ（勝率や累計収支）の集計を行う
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 流れ
 
-## Deploy on Vercel
+1. 事前設定
+   1. プレイヤーを登録する
+2. プレイ開始
+   1. **大会**を作成し、レートと参加者を設定
+   2. **ゲーム**（半荘、東風）を作成
+   3. ゲームに対して、各プレイヤーの得点を入力
+3. プレイ終了
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 統計機能
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+プレイヤーごと（三麻、四麻別）の以下のデータを集計する
+
+- 累計収支
+- 着順ごとの確率
+- プレイした大会数
+- レーティング（独自にレーティング方法を策定、優先度は低い）
+
+## その他機能
+
+- ゲームの結果を画像で保存して共有できる機能
+
+## 実装しない機能
+
+- ウマ、オカなどボーナスポイントの計算
+
+> 麻雀の**ウマ**は、ゲーム終了時の順位に応じて増減するボーナス点です。主に 1 位と 4 位、2 位と 3 位の間で点数（例: ウマ 10-20 なら 1 位+20000 点、2 位+10000 点、3 位-10000 点、4 位-20000 点）がやり取りされます。
+>
+> **オカ**は、ゲーム開始時の持ち点（例: 25000 点）と、清算時の基準点（原点、例: 30000 点）の差額を、最終的に 1 位のプレイヤーが総取りするボーナスです。この差額（5000 点）を 4 人分集めた合計（20000 点）が、トップに支払われます。
+
+## 技術要件
+
+会社で扱う技術に慣れるため、API を C#と UI ライブラリに MUI を採用することを考えていたが、やりきる自信がないので経験の多いフルスタック TypeScript で開発する。
