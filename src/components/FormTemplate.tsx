@@ -1,7 +1,7 @@
 "use client";
 
 import { FieldValues, UseFormReturn } from "react-hook-form";
-import { Form } from "./ui/form";
+import { Form } from "@/components/ui/form";
 import { useEffect } from "react";
 
 export default function FormTemplate<T extends FieldValues>({

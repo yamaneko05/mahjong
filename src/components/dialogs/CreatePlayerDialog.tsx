@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import DialogTemplate from "../DialogTemplate";
-import { createPlayer } from "@/actions";
+import { createPlayer } from "@/app/actions";
 import PlayerForm from "../PlayerForm";
 
 export default function CreatePlayerDialog() {

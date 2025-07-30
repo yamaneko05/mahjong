@@ -1,4 +1,4 @@
-import EditPlayerDialog from "./EditPlayerDialog";
+import EditPlayerDialog from "../dialogs/EditPlayerDialog";
 import { Player } from "@/generated/prisma";
 import DeletePlayerAlertDialog from "../alert-dialogs/DeletePlayerAlertDialog";
 import dayjs from "dayjs";

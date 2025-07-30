@@ -1,5 +1,5 @@
 import { CircleCheckIcon } from "lucide-react";
-import { Input } from "../ui/input";
+import { Input } from "@/components/ui/input";
 
 export default function GameCard({
   title,

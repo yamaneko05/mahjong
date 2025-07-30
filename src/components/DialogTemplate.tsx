@@ -1,7 +1,7 @@
 "use client";
 
 import { Dialog, DialogFooter, DialogHeader } from "./Dialog";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { Loader2Icon } from "lucide-react";
 
 export default function DialogTemplate({

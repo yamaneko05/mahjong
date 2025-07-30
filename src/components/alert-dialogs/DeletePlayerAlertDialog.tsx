@@ -1,9 +1,9 @@
 "use client";
 
 import { Trash2Icon } from "lucide-react";
-import AlertDialog from "../AlertDialog";
-import { Button } from "../ui/button";
-import { deletePlayer } from "@/actions";
+import AlertDialog from "@/components/AlertDialog";
+import { Button } from "@/components/ui/button";
+import { deletePlayer } from "@/app/actions";
 import { useState } from "react";
 
 export default function DeletePlayerAlertDialog({

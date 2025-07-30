@@ -1,14 +1,7 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import CreatePlayerDialog from "@/components/dialogs/CreatePlayerDialog";
 import PlayerCard from "@/components/cards/PlayerCard";
-import { prisma } from "@/lib/prisma";
-
-async function getPlayers() {
-  const players = await prisma.player.findMany({
-    orderBy: { name: "asc" },
-  });
-  return players;
-}
+import { getPlayers } from "@/app/actions";
 
 export default async function Page() {
   const players = await getPlayers();

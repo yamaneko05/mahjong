@@ -1,11 +1,11 @@
 "use client";
 
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import PlayerForm from "./PlayerForm";
-import DialogTemplate from "./DialogTemplate";
+import PlayerForm from "@/components/PlayerForm";
+import DialogTemplate from "@/components/DialogTemplate";
 import { EditIcon } from "lucide-react";
-import { updatePlayer } from "@/actions";
+import { updatePlayer } from "@/app/actions";
 
 export default function EditPlayerDialog({
   id,

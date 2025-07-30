@@ -1,9 +1,10 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { prisma } from "./lib/prisma";
-import { PlayerFormInput, playerFormSchema } from "./schemas/playerForm";
-import { Prisma } from "./generated/prisma";
+import { prisma } from "@/lib/prisma";
+import { PlayerFormInput, playerFormSchema } from "@/schemas/playerForm";
+import { Prisma } from "@/generated/prisma";
+import { sectionFormInput, sectionFormSchema } from "@/schemas/sectionForm";
 
 export async function createPlayer(data: PlayerFormInput) {
   const parsed = playerFormSchema.safeParse(data);
@@ -68,4 +69,57 @@ export async function deletePlayer(id: string) {
     console.error("Error deleting player", error);
     return { success: false, error: "Failed to delete player" };
   }
+}
+
+export async function getPlayers() {
+  const players = await prisma.player.findMany({
+    orderBy: { name: "asc" },
+  });
+  return players;
+}
+
+export async function getRates() {
+  const rates = await prisma.rate.findMany({
+    orderBy: { rate: "asc" },
+  });
+  return rates;
+}
+
+export async function getSections() {
+  const sections = await prisma.section.findMany({
+    orderBy: { date: "desc" },
+    include: {
+      rate: true,
+      sectionResults: {
+        include: {
+          player: true,
+        },
+      },
+    },
+  });
+  return sections;
+}
+
+export async function createSection(data: sectionFormInput) {
+  const parsed = sectionFormSchema.safeParse(data);
+
+  if (!parsed.success) {
+    console.error("Validation failed", parsed.error);
+    return { success: false, error: parsed.error.flatten() };
+  }
+
+  const { date, rateId, startingPoints, playerIds } = parsed.data;
+
+  await prisma.section.create({
+    data: {
+      date: date,
+      rateId: rateId,
+      startingPoints: startingPoints,
+      players: {
+        connect: playerIds.map((id) => ({ id: id })),
+      },
+    },
+  });
+
+  return { success: true };
 }

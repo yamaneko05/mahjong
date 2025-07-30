@@ -2,9 +2,9 @@
 
 import { DefaultValues, useForm } from "react-hook-form";
 import { PlayerFormInput, playerFormSchema } from "@/schemas/playerForm";
-import { FormField } from "./ui/form";
+import { FormField } from "@/components/ui/form";
 import FormItem from "./FormItem";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormTemplate from "./FormTemplate";
 

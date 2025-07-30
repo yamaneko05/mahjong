@@ -1,53 +1,40 @@
 "use client";
 
-import { PlayerFormInput, playerFormSchema } from "@/schemas/playerForm";
-import { Dialog, DialogFooter, DialogHeader } from "../Dialog";
-import { Button } from "../ui/button";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Form } from "../ui/form";
-import { Loader2Icon } from "lucide-react";
-import { createPlayer } from "@/actions";
-import CreateSectionForm from "../CreateSectionForm";
+import DialogTemplate from "../DialogTemplate";
+import { createSection } from "@/app/actions";
+import SectionForm from "../SectionForm";
+import dayjs from "dayjs";
+import { STARTING_POINTS_ARRAY } from "@/constants/startingPointsConstants";
 
-export default function CreatePlayerDialog() {
-  const form = useForm<PlayerFormInput>({
-    mode: "onBlur",
-    resolver: zodResolver(playerFormSchema),
-    defaultValues: {
-      name: "",
-    },
-  });
-  const isLoading = form.formState.isSubmitting;
-
-  const onSubmit = async (data: PlayerFormInput) => {
-    await createPlayer(data);
-    setIsOpen(false);
-    form.reset();
-  };
-
+export default function CreateSectionDialog() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   return (
-    <Dialog
-      trigger={<Button>セクションを作成</Button>}
+    <DialogTemplate
       isOpen={isOpen}
       setIsOpen={setIsOpen}
+      trigger={<Button>セクションを作成</Button>}
+      headerText="セクションを作成"
+      formId="create-section-form"
+      isSubmitting={isSubmitting}
+      submitButtonText="作成"
     >
-      <DialogHeader>セクション設定</DialogHeader>
-      <Form {...form}>
-        <CreateSectionForm
-          handleSubmit={form.handleSubmit(onSubmit)}
-          control={form.control}
-        />
-      </Form>
-      <DialogFooter>
-        <Button type="submit" form="create-player-form" disabled={isLoading}>
-          {isLoading && <Loader2Icon className="animate-spin" />}
-          作成
-        </Button>
-      </DialogFooter>
-    </Dialog>
+      <SectionForm
+        onSuccess={() => setIsOpen(false)}
+        onIsSubmittingChange={setIsSubmitting}
+        formId="create-section-form"
+        defaultValues={{
+          date: dayjs().format("YYYY-MM-DD"),
+          rateId: undefined,
+          startingPoints: STARTING_POINTS_ARRAY[0],
+          playerIds: [],
+        }}
+        action={async (data) => await createSection(data)}
+        clearOnSuccess
+      />
+    </DialogTemplate>
   );
 }
