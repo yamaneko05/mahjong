@@ -1,7 +1,11 @@
 "use client";
 
 import { DefaultValues, useForm } from "react-hook-form";
-import { FormField } from "@/components/ui/form";
+import {
+  FormControl,
+  FormField,
+  FormItem as ShadcnFormItem,
+} from "@/components/ui/form";
 import FormItem from "./FormItem";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -70,11 +74,12 @@ export default function SectionForm({
         control={control}
         name="rateId"
         render={({ field }) => (
-          <FormItem
-            label="レート"
-            description="今日の日付がデフォルトで入ります。"
-          >
-            <RadioGroup className="mt-2" {...field}>
+          <FormItem label="レート">
+            <RadioGroup
+              className="mt-2"
+              onValueChange={field.onChange}
+              defaultValue={field.value}
+            >
               {rates?.map((rate) => (
                 <div key={rate.id} className="flex items-center space-x-3">
                   <RadioGroupItem id={`rate-${rate.id}`} value={rate.id} />
@@ -89,24 +94,16 @@ export default function SectionForm({
         control={control}
         name="startingPoints"
         render={({ field }) => (
-          <FormItem
-            label="持ち点"
-            description="25,000点がデフォルトで入ります。"
-          >
+          <FormItem label="持ち点">
             <RadioGroup
               className="mt-2"
-              {...field}
-              value={field.value.toString()}
+              onValueChange={field.onChange}
+              defaultValue={field.value}
             >
               {STARTING_POINTS_ARRAY.map((startingPoints, index) => (
                 <div key={index} className="flex items-center space-x-3">
-                  <RadioGroupItem
-                    id={`startingPoints-${index}`}
-                    value={startingPoints.toString()}
-                  />
-                  <Label htmlFor={`startingPoints-${index}`}>
-                    {startingPoints.toLocaleString("ja-JP")}
-                  </Label>
+                  <RadioGroupItem id={startingPoints} value={startingPoints} />
+                  <Label htmlFor={startingPoints}>{startingPoints}</Label>
                 </div>
               ))}
             </RadioGroup>

@@ -135,7 +135,7 @@ export async function createSection(data: sectionFormInput) {
     data: {
       date: dayjs(date).toISOString(),
       rateId: rateId,
-      startingPoints: startingPoints,
+      startingPoints: Number(startingPoints.replace(",", "")),
       players: {
         connect: playerIds.map((id) => ({ id: id })),
       },

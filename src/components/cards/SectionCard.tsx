@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Player, Rate, Section, SectionResult } from "@/generated/prisma";
 import dayjs from "@/lib/dayjs";
 import { DATE_FORMAT } from "@/constants/dateFormatConstants";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 export default function SectionCard({
   section,
@@ -28,26 +29,35 @@ export default function SectionCard({
           <b>持ち点</b>: {section.startingPoints.toLocaleString("ja-JP")}
         </li>
       </ul>
-      <Table className="mt-2">
-        <TableBody>
-          {section.sectionResults.map((result, index) => (
-            <TableRow key={result.id}>
-              <TableCell>{index + 1}</TableCell>
-              <TableCell>{result.player.name}</TableCell>
-              <TableCell
-                className={cn(
-                  result.result > 0 ? "text-green-500" : "text-red-500"
-                )}
-              >
-                {result.result.toLocaleString("ja-JP", {
-                  style: "currency",
-                  currency: "JPY",
-                })}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <div className="mt-2">
+        {section.sectionResults.length > 0 ? (
+          <Table className="mt-2 table-fixed">
+            <TableBody>
+              {section.sectionResults.map((result, index) => (
+                <TableRow key={result.id}>
+                  <TableCell className="w-8">{index + 1}</TableCell>
+                  <TableCell>{result.player.name}</TableCell>
+                  <TableCell
+                    className={cn(
+                      result.result > 0 ? "text-green-500" : "text-red-500",
+                      "text-right"
+                    )}
+                  >
+                    {result.result.toLocaleString("ja-JP", {
+                      style: "currency",
+                      currency: "JPY",
+                    })}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <Alert>
+            <AlertDescription>データがありません</AlertDescription>
+          </Alert>
+        )}
+      </div>
     </div>
   );
 }
