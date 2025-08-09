@@ -6,6 +6,7 @@ import { PlayerFormInput, playerFormSchema } from "@/schemas/playerForm";
 import { Prisma } from "@/generated/prisma";
 import { sectionFormInput, sectionFormSchema } from "@/schemas/sectionForm";
 import dayjs from "@/lib/dayjs";
+import { notFound, redirect } from "next/navigation";
 
 export async function createPlayer(data: PlayerFormInput) {
   const parsed = playerFormSchema.safeParse(data);
@@ -103,13 +104,18 @@ export async function getSections() {
 }
 
 export async function getSection(id: string) {
-  const section = await prisma.section.findUniqueOrThrow({
+  const section = await prisma.section.findUnique({
     where: { id: id },
     include: {
       rate: true,
       games: {
         include: {
           gameResults: {
+            orderBy: {
+              player: {
+                name: "asc",
+              },
+            },
             include: {
               player: true,
             },
@@ -118,6 +124,9 @@ export async function getSection(id: string) {
       },
     },
   });
+
+  if (!section) notFound();
+
   return section;
 }
 
@@ -144,4 +153,22 @@ export async function createSection(data: sectionFormInput) {
 
   revalidatePath("/sections");
   return { success: true };
+}
+
+export async function deleteSection(id: string) {
+  try {
+    await prisma.section.delete({
+      where: { id },
+    });
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === "P2025") {
+        console.error("Section not found", id);
+        return { success: false, error: "Section not found" };
+      }
+    }
+    console.error("Error deleting section", error);
+    return { success: false, error: "Failed to delete section" };
+  }
+  redirect("/sections");
 }

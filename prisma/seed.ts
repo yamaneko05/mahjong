@@ -125,42 +125,42 @@ async function main() {
       {
         gameId: game1_s1.id,
         playerId: player1.id,
-        point: 50,
+        point: 25000,
       },
       {
         gameId: game1_s1.id,
         playerId: player2.id,
-        point: -20,
+        point: 25000,
       },
       {
         gameId: game1_s1.id,
         playerId: player3.id,
-        point: -30,
+        point: 25000,
+      },
+      {
+        gameId: game1_s1.id,
+        playerId: player4.id,
+        point: 25000,
       },
       {
         gameId: game2_s1.id,
         playerId: player1.id,
-        point: -10,
+        point: 25000,
       },
       {
         gameId: game2_s1.id,
         playerId: player2.id,
-        point: 40,
+        point: 25000,
       },
       {
         gameId: game2_s1.id,
         playerId: player3.id,
-        point: -30,
+        point: 25000,
       },
       {
-        gameId: game1_s2.id,
-        playerId: player1.id,
-        point: 100,
-      },
-      {
-        gameId: game1_s2.id,
-        playerId: player2.id,
-        point: -100,
+        gameId: game2_s1.id,
+        playerId: player4.id,
+        point: 26000,
       },
     ],
   });
