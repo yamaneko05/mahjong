@@ -3,8 +3,9 @@
 import { Trash2Icon } from "lucide-react";
 import AlertDialog from "@/components/AlertDialog";
 import { Button } from "@/components/ui/button";
-import { deleteSection } from "@/app/actions";
 import { useState } from "react";
+import { useDeleteSection } from "@/app/hooks/sectionHooks";
+import { useRouter } from "next/navigation";
 
 export default function DeleteSectionAlertDialog({
   id,
@@ -13,8 +14,12 @@ export default function DeleteSectionAlertDialog({
   id: string;
   name: string;
 }) {
+  const { mutateAsync: deleteSection } = useDeleteSection();
+  const router = useRouter();
+
   const handleContinue = async () => {
     await deleteSection(id);
+    router.push("/sections");
   };
 
   const [isOpen, setIsOpen] = useState(false);

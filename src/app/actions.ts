@@ -149,7 +149,6 @@ export async function createSection(data: sectionFormInput) {
     },
   });
 
-  revalidatePath("/sections");
   return { success: true };
 }
 
@@ -168,5 +167,4 @@ export async function deleteSection(id: string) {
     console.error("Error deleting section", error);
     return { success: false, error: "Failed to delete section" };
   }
-  redirect("/sections");
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { usePlayers } from "@/app/hooks/playerHooks";
-import PlayerCard from "./cards/PlayerCard";
+import PlayerCard from "@/components/cards/PlayerCard";
 
 export default function PlayerList() {
   const players = usePlayers();

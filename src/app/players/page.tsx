@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/Breadcrumb";
 import CreatePlayerDialog from "@/components/dialogs/CreatePlayerDialog";
-import PlayerList from "@/components/PlayerList";
+import PlayerList from "@/components/lists/PlayerList";
 
 export default async function Page() {
   return (

@@ -3,17 +3,19 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import DialogTemplate from "../DialogTemplate";
-import { createSection } from "@/app/actions";
 import SectionForm from "../SectionForm";
 import dayjs from "@/lib/dayjs";
 import { STARTING_POINTS_ARRAY } from "@/constants/startingPointsConstants";
 import { useRates } from "@/app/hooks/rateHooks";
+import { useCreateSection } from "@/app/hooks/sectionHooks";
 
 export default function CreateSectionDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const rates = useRates();
+
+  const { mutateAsync: createSection } = useCreateSection();
 
   return (
     <DialogTemplate

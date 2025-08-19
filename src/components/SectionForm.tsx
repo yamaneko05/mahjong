@@ -1,11 +1,7 @@
 "use client";
 
 import { DefaultValues, useForm } from "react-hook-form";
-import {
-  FormControl,
-  FormField,
-  FormItem as ShadcnFormItem,
-} from "@/components/ui/form";
+import { FormField } from "@/components/ui/form";
 import FormItem from "./FormItem";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +11,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { STARTING_POINTS_ARRAY } from "@/constants/startingPointsConstants";
-import { usePlayers } from "@/app/hooks/queries/usePlayers";
+import { usePlayers } from "@/app/hooks/playerHooks";
 import { useRates } from "@/app/hooks/rateHooks";
 
 export default function SectionForm({
