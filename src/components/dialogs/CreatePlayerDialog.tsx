@@ -3,12 +3,14 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import DialogTemplate from "../DialogTemplate";
-import { createPlayer } from "@/app/actions";
 import PlayerForm from "../PlayerForm";
+import { useCreatePlayer } from "@/app/hooks/playerHooks";
 
 export default function CreatePlayerDialog() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const createPlayer = useCreatePlayer();
 
   return (
     <DialogTemplate
@@ -25,7 +27,7 @@ export default function CreatePlayerDialog() {
         onIsSubmittingChange={setIsSubmitting}
         formId="create-player-form"
         defaultValues={{ name: "" }}
-        action={async (data) => await createPlayer(data)}
+        action={async (data) => await createPlayer.mutateAsync(data)}
         clearOnSuccess
       />
     </DialogTemplate>

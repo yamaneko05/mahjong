@@ -3,8 +3,8 @@
 import { Trash2Icon } from "lucide-react";
 import AlertDialog from "@/components/AlertDialog";
 import { Button } from "@/components/ui/button";
-import { deletePlayer } from "@/app/actions";
 import { useState } from "react";
+import { useDeletePlayer } from "@/app/hooks/playerHooks";
 
 export default function DeletePlayerAlertDialog({
   id,
@@ -13,6 +13,8 @@ export default function DeletePlayerAlertDialog({
   id: string;
   name: string;
 }) {
+  const { mutateAsync: deletePlayer } = useDeletePlayer();
+
   const handleContinue = async () => {
     await deletePlayer(id);
   };

@@ -21,7 +21,7 @@ export async function createPlayer(data: PlayerFormInput) {
   await prisma.player.create({
     data: { name },
   });
-  revalidatePath("/players");
+
   return { success: true };
 }
 
@@ -40,7 +40,6 @@ export async function updatePlayer(id: string, data: PlayerFormInput) {
       where: { id },
       data: { name },
     });
-    revalidatePath("/players");
     return { success: true };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -59,7 +58,6 @@ export async function deletePlayer(id: string) {
     await prisma.player.delete({
       where: { id },
     });
-    revalidatePath("/players");
     return { success: true };
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {

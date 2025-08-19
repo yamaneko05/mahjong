@@ -7,7 +7,7 @@ import { createSection } from "@/app/actions";
 import SectionForm from "../SectionForm";
 import dayjs from "@/lib/dayjs";
 import { STARTING_POINTS_ARRAY } from "@/constants/startingPointsConstants";
-import { useRates } from "@/app/hooks/useRates";
+import { useRates } from "@/app/hooks/rateHooks";
 
 export default function CreateSectionDialog() {
   const [isOpen, setIsOpen] = useState(false);

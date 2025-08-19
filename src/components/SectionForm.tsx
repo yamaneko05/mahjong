@@ -15,8 +15,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { STARTING_POINTS_ARRAY } from "@/constants/startingPointsConstants";
-import { usePlayers } from "@/app/hooks/usePlayers";
-import { useRates } from "@/app/hooks/useRates";
+import { usePlayers } from "@/app/hooks/queries/usePlayers";
+import { useRates } from "@/app/hooks/rateHooks";
 
 export default function SectionForm({
   onSuccess,

@@ -5,7 +5,7 @@ import { useState } from "react";
 import PlayerForm from "@/components/PlayerForm";
 import DialogTemplate from "@/components/DialogTemplate";
 import { EditIcon } from "lucide-react";
-import { updatePlayer } from "@/app/actions";
+import { useUpdatePlayer } from "@/app/hooks/playerHooks";
 
 export default function EditPlayerDialog({
   id,
@@ -16,6 +16,8 @@ export default function EditPlayerDialog({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { mutateAsync: updatePlayer } = useUpdatePlayer();
 
   const handleSuccess = () => {
     setIsOpen(false);
@@ -40,7 +42,7 @@ export default function EditPlayerDialog({
         onIsSubmittingChange={setIsSubmitting}
         formId="edit-player-form"
         defaultValues={{ name: name }}
-        action={async (data) => await updatePlayer(id, data)}
+        action={async (data) => await updatePlayer({ id, data })}
       />
     </DialogTemplate>
   );
